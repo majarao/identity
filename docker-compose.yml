@@ -1,0 +1,22 @@
+version: '3.4'
+name: identity_container
+services:
+  identity:
+    container_name: identity
+    image: ${DOCKER_REGISTRY-}identity
+    build:
+      context: Identity
+      dockerfile: Dockerfile
+    depends_on:
+      - sqlserver
+  sqlserver:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    hostname: 'sqlserver'
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: "yourStrong(!)Password"
+    ports:
+      - '1433:1433'    
+    expose:
+      - 1433

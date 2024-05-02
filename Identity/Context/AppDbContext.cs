@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Context;
 
-public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(options)
+public class AppDbContext : IdentityDbContext<User>
 {
+    public AppDbContext(DbContextOptions options) : base(options) => Database.EnsureCreated();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Seed();
